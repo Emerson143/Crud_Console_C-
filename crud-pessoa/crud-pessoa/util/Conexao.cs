@@ -9,31 +9,32 @@ namespace crud_pessoa.util
 {
     public class Conexao
      {
-        
-        public static void connect()
+        private static string _server = "localhost";
+        private static  string _database = "c#_projeto";
+        private static string _user = "root";
+        private static string _password = "";
+        private static string _port = "3306";
+        private static string _sslM = "none";
+
+        private static string _connString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}",
+            _server, _port, _user, _password, _database, _sslM);
+
+        public static MySqlConnection _connection = new MySqlConnection(_connString);
+
+        public static void connectTest()
         {
-            string server = "localhost";
-            string database = "c#_projeto";
-            string user = "root";
-            string password = "";
-            string port = "3306";
-            string sslM = "none";
-
-            string connString = String.Format("server={0};port={1};user id={2}; password={3}; database={4}; SslMode={5}", 
-                server, port, user, password, database, sslM);
-
-            var conn = new MySqlConnection(connString);
+             
             try
             {
-                conn.Open();
+                _connection.Open();
 
                 Console.WriteLine("Connection Successful");
 
-                conn.Close();
+                _connection.Close();
             }
             catch (MySqlException e)
             {
-                Console.WriteLine(e.Message + connString);
+                Console.WriteLine(e.Message + _connString);
             }
 
         }
