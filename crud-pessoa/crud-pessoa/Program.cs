@@ -43,7 +43,7 @@ public class Program
                     AdicionarDados();
                     break;
                 case "2":
-                    
+                    AtualizarDados();
                     break;
                 case "3":
                     DeletaDados();
@@ -104,7 +104,7 @@ public class Program
         Query.Connection = Conexao._connection;
         Conexao._connection.Open();//Abre conexão
 
-        Query.CommandText = @"SELECT id, nome, cpf, dataNascimento,email FROM tb_usuario";
+        Query.CommandText = @"SELECT id, nome, cpf, dataNascimento,email FROM tb_usuario order by id asc";
         MySqlDataReader dtreader = Query.ExecuteReader();//Crie um objeto do tipo reader para ler os dados do banco
 
         Console.WriteLine("*********************************************");
@@ -158,7 +158,7 @@ public class Program
         comm.Parameters.AddWithValue("@cpf", cpf);
         comm.Parameters.AddWithValue("@dataNascimento", data);
         comm.Parameters.AddWithValue("@email", email);
-        comm.ExecuteNonQuery();
+        comm.ExecuteNonQuery();// executa o comando 
         Console.Clear();
 
         Conexao._connection.Close();//Fecha Conexao
@@ -193,7 +193,7 @@ public class Program
 
                 comm.CommandText = "DELETE FROM tb_usuario where id = " + idResposta.ToString();// deletando os dados no Mysql
                
-                comm.ExecuteNonQuery();
+                comm.ExecuteNonQuery();// executa o comando 
                 Console.Clear();
 
                 Conexao._connection.Close();//Fecha Conexao
@@ -206,5 +206,69 @@ public class Program
             }
 
         }while(sair);
+
+
+        
+    }       
+    private static void AtualizarDados()//atualizar dados
+    {
+        Console.Clear();
+        Console.WriteLine("******************************");
+        Console.WriteLine("*                            *");
+        Console.WriteLine("*    Atualizar usuarios      *");
+        Console.WriteLine("*                            *");
+        Console.WriteLine("******************************");
+        Console.WriteLine();
+        ListaDados();
+
+
+
+        bool sair;
+        do
+        {
+            Console.Write("Digite o ID que deseja atualizar: ");
+            var idResposta = Convert.ToInt32(Console.ReadLine());
+            sair = false;
+            if
+                (_listaId.Contains(idResposta))
+
+            {
+                Console.WriteLine();
+                Console.Write("Digite o nome: ");
+                var nome = Console.ReadLine();
+                Console.Write("Digite o cpf: ");
+                var cpf = Console.ReadLine();
+                Console.Write("Digite sua data de nascimento: ");
+                var data = Console.ReadLine();
+                Console.Write("Digite o seu email: ");
+                var email = Console.ReadLine();
+
+                Conexao._connection.Open();//Abre conexão
+                MySqlCommand comm = Conexao._connection.CreateCommand();
+
+                comm.CommandText = "UPDATE tb_usuario set " +   // inserindo os dados as variaveis
+                    " nome = @nome," +
+                    " cpf = @cpf," +
+                    " dataNascimento = @dataNascimento," +
+                    " email = @email" +
+                    " where id =  " + idResposta.ToString(); // where vai procurar o id que desejo atualizar
+                 
+                comm.Parameters.AddWithValue("@nome", nome);
+                comm.Parameters.AddWithValue("@cpf", cpf);
+                comm.Parameters.AddWithValue("@dataNascimento", data);
+                comm.Parameters.AddWithValue("@email", email);
+                comm.ExecuteNonQuery(); // executa o comando 
+                Conexao._connection.Close();//Fecha Conexao
+                Console.Clear();
+                MenuPrincipal();
+
+            }
+            else
+            {
+                sair = true;
+                Console.WriteLine("opção invalida, digite novamente: ");
+            }
+
+        } while (sair);
     }
 }
