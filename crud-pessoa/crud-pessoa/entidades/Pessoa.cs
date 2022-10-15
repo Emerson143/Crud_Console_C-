@@ -8,17 +8,19 @@ namespace crud_pessoa.entidades
 {
     public class Pessoa
     {
-       private int Id { get; set; }
-       private string Nome { get; set; }
-       private string Cpf { get; set; }
-       private  string DataNascimento { get; set; }
+       public int Id { get; set; }
+       public string Nome { get; set; }
+       public string Cpf { get; set; }
+       public  string DataNascimento { get; set; }
+        public string Email { get; set; }
 
-        public Pessoa(int id, string nome, string cpf, string dataNascimento)
+        public Pessoa(int id, string nome, string cpf, string dataNascimento, string email)
         {
             Id = id;
             Nome = nome;
             Cpf = cpf;
             DataNascimento = dataNascimento;
+            Email = email;
         }
 
         public Pessoa()
