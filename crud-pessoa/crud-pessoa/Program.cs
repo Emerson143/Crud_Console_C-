@@ -3,9 +3,14 @@ using crud_pessoa.util;
 using MySqlConnector;
 using System;
 using System.Data;
+using System.Linq;
 
 public class Program
 {
+
+    public static List<int> _listaId;
+
+
     static void Main(string[] args)
     {
         
@@ -41,7 +46,7 @@ public class Program
                     
                     break;
                 case "3":
-                    
+                    DeletaDados();
                     break;
                 case "4":
                     VisualizarDados();
@@ -105,6 +110,8 @@ public class Program
         Console.WriteLine("*********************************************");
         Console.WriteLine("ID - NOME - CPF - DATA DE NASCIMENTO - EMAIL");
         Console.WriteLine();
+        // _listaId = null;
+        List<int>listaId = new List<int>();
         while (dtreader.Read())//Enquanto existir dados no select
         {
 
@@ -113,10 +120,11 @@ public class Program
             var cpf = dtreader["cpf"].ToString();
             var dataNascimento = dtreader["dataNascimento"].ToString();
             var email = dtreader["email"].ToString();
-
+            listaId.Add(Convert.ToInt32(id));
             Console.WriteLine(id +" - " + nome + " - " + cpf+ " - " + dataNascimento+ " - " + email);
            
         }
+        _listaId = listaId;
         Console.WriteLine();
         Console.WriteLine("*********************************************");
         Console.WriteLine();
@@ -167,7 +175,36 @@ public class Program
         Console.WriteLine();
         ListaDados();
 
-        Console.WriteLine("Digite o id do usuario para deletar");
+        
 
+        bool sair;
+        do
+        {
+            Console.Write("Digite o ID que deseja deletar: ");
+            var idResposta = Convert.ToInt32(Console.ReadLine());
+            sair = false;
+            if 
+                (_listaId.Contains(idResposta))
+
+            {
+
+                Conexao._connection.Open();//Abre conexão
+                MySqlCommand comm = Conexao._connection.CreateCommand();
+
+                comm.CommandText = "DELETE FROM tb_usuario where id = " + idResposta.ToString();// deletando os dados no Mysql
+               
+                comm.ExecuteNonQuery();
+                Console.Clear();
+
+                Conexao._connection.Close();//Fecha Conexao
+                MenuPrincipal();
+            }
+            else 
+            {
+                sair = true;
+                Console.WriteLine("opção invalida, digite novamente: ");
+            }
+
+        }while(sair);
     }
 }
