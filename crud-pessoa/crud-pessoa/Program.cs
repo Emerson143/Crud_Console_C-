@@ -115,7 +115,7 @@ public class Program
         while (dtreader.Read())//Enquanto existir dados no select
         {
 
-            var id = dtreader["id"].ToString();//Preencha objeto do tipo pessoa (id) com dados vindo do banco de dados
+            var id = dtreader["id"].ToString();//Preenche objeto do tipo pessoa (id) com dados vindo do banco de dados
             var nome = dtreader["nome"].ToString();
             var cpf = dtreader["cpf"].ToString();
             var dataNascimento = dtreader["dataNascimento"].ToString();

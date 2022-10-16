@@ -10,7 +10,7 @@ namespace crud_pessoa.util
     public class Conexao
      {
         private static string _server = "localhost";
-        private static  string _database = "c#_projeto";
+        private static string _database = "c#_projeto";
         private static string _user = "root";
         private static string _password = "";
         private static string _port = "3306";
