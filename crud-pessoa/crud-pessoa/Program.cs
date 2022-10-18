@@ -90,7 +90,7 @@ public class Program
         } while (sair);
     }
 
-    private static void ListaDados()
+    private static void ListaDados() // read
     {
         Console.Clear();
         Console.WriteLine("******************************");
@@ -100,7 +100,7 @@ public class Program
         Console.WriteLine("******************************");
         Console.WriteLine();
 
-        MySqlCommand Query = new MySqlCommand();
+        MySqlCommand Query = new MySqlCommand(); // dar o comando
         Query.Connection = Conexao._connection;
         Conexao._connection.Open();//Abre conexão
 
@@ -112,10 +112,10 @@ public class Program
         Console.WriteLine();
         // _listaId = null;
         List<int>listaId = new List<int>();
-        while (dtreader.Read())//Enquanto existir dados no select
+        while (dtreader.Read())//Enquanto existir dados no select 
         {
 
-            var id = dtreader["id"].ToString();//Preenche objeto do tipo pessoa (id) com dados vindo do banco de dados
+            var id = dtreader["id"].ToString();//Preenche objeto do tipo pessoa com dados vindo do banco de dados
             var nome = dtreader["nome"].ToString();
             var cpf = dtreader["cpf"].ToString();
             var dataNascimento = dtreader["dataNascimento"].ToString();
@@ -244,7 +244,7 @@ public class Program
                 var email = Console.ReadLine();
 
                 Conexao._connection.Open();//Abre conexão
-                MySqlCommand comm = Conexao._connection.CreateCommand();
+                MySqlCommand comm = Conexao._connection.CreateCommand(); // comandos para o mtsql
 
                 comm.CommandText = "UPDATE tb_usuario set " +   // inserindo os dados as variaveis
                     " nome = @nome," +
