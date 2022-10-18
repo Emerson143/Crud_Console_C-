@@ -104,11 +104,11 @@ public class Program
         Query.Connection = Conexao._connection;
         Conexao._connection.Open();//Abre conexão
 
-        Query.CommandText = @"SELECT id, nome, cpf, dataNascimento,email FROM tb_usuario order by id asc";
+        Query.CommandText = @"SELECT id, nome, cpf, dataNascimento, email, telefone FROM tb_usuario order by id asc";
         MySqlDataReader dtreader = Query.ExecuteReader();//Crie um objeto do tipo reader para ler os dados do banco
 
         Console.WriteLine("*********************************************");
-        Console.WriteLine("ID - NOME - CPF - DATA DE NASCIMENTO - EMAIL");
+        Console.WriteLine("ID - NOME - CPF - DATA DE NASCIMENTO - EMAIL - TELEFONE");
         Console.WriteLine();
         // _listaId = null;
         List<int>listaId = new List<int>();
@@ -120,8 +120,9 @@ public class Program
             var cpf = dtreader["cpf"].ToString();
             var dataNascimento = dtreader["dataNascimento"].ToString();
             var email = dtreader["email"].ToString();
+            var telefone = dtreader["telefone"].ToString();
             listaId.Add(Convert.ToInt32(id));
-            Console.WriteLine(id +" - " + nome + " - " + cpf+ " - " + dataNascimento+ " - " + email);
+            Console.WriteLine(id +" - " + nome + " - " + cpf+ " - " + dataNascimento+ " - " + email+ " - "+ telefone);
            
         }
         _listaId = listaId;
@@ -149,15 +150,19 @@ public class Program
         var data = Console.ReadLine();
         Console.Write("Digite o seu email: ");
         var email = Console.ReadLine();
+        Console.Write("Digite o seu telefone ");
+        var telefone = Console.ReadLine();
 
         Conexao._connection.Open();//Abre conexão
         MySqlCommand comm = Conexao._connection.CreateCommand();
 
-        comm.CommandText = "INSERT INTO tb_usuario (nome, cpf, dataNascimento,email) VALUES(@nome, @cpf, @dataNascimento, @email)";// inserindo os dados as variaveis
+        comm.CommandText = "INSERT INTO tb_usuario (nome, cpf, dataNascimento,email, telefone) " +
+            "VALUES(@nome, @cpf, @dataNascimento, @email, @telefone)";// inserindo os dados as variaveis
         comm.Parameters.AddWithValue("@nome", nome);
         comm.Parameters.AddWithValue("@cpf", cpf);
         comm.Parameters.AddWithValue("@dataNascimento", data);
         comm.Parameters.AddWithValue("@email", email);
+        comm.Parameters.AddWithValue("@telefone", telefone);
         comm.ExecuteNonQuery();// executa o comando 
         Console.Clear();
 
@@ -242,6 +247,8 @@ public class Program
                 var data = Console.ReadLine();
                 Console.Write("Digite o seu email: ");
                 var email = Console.ReadLine();
+                Console.Write("Digite o seu telefone: ");
+                var telefone = Console.ReadLine();
 
                 Conexao._connection.Open();//Abre conexão
                 MySqlCommand comm = Conexao._connection.CreateCommand(); // comandos para o mtsql
@@ -251,12 +258,14 @@ public class Program
                     " cpf = @cpf," +
                     " dataNascimento = @dataNascimento," +
                     " email = @email" +
+                    " telefone = @telefone"+
                     " where id =  " + idResposta.ToString(); // where vai procurar o id que desejo atualizar
                  
                 comm.Parameters.AddWithValue("@nome", nome);
                 comm.Parameters.AddWithValue("@cpf", cpf);
                 comm.Parameters.AddWithValue("@dataNascimento", data);
                 comm.Parameters.AddWithValue("@email", email);
+                comm.Parameters.AddWithValue("@telefone", email);
                 comm.ExecuteNonQuery(); // executa o comando 
                 Conexao._connection.Close();//Fecha Conexao
                 Console.Clear();

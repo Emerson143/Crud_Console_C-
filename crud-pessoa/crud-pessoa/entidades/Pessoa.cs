@@ -13,14 +13,16 @@ namespace crud_pessoa.entidades
        public string Cpf { get; set; }
        public  string DataNascimento { get; set; }
         public string Email { get; set; }
+        public string Telefone { get; set; }
 
-        public Pessoa(int id, string nome, string cpf, string dataNascimento, string email)
+        public Pessoa(int id, string nome, string cpf, string dataNascimento, string email, string telefone)
         {
             Id = id;
             Nome = nome;
             Cpf = cpf;
             DataNascimento = dataNascimento;
             Email = email;
+            Telefone = telefone;
         }
 
         public Pessoa()
