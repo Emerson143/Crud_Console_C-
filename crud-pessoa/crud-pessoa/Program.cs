@@ -4,6 +4,7 @@ using MySqlConnector;
 using System;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 public class Program
 {
@@ -13,11 +14,16 @@ public class Program
 
     static void Main(string[] args)
     {
+
+
         
 
-        MenuPrincipal();
+      MenuPrincipal();
 
     }
+
+   
+
 
     private static void MenuPrincipal()
     {
@@ -215,6 +221,8 @@ public class Program
 
         
     }       
+     
+
     private static void AtualizarDados()//atualizar dados
     {
         Console.Clear();

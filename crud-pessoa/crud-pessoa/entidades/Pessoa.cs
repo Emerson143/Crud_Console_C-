@@ -29,5 +29,9 @@ namespace crud_pessoa.entidades
         {
           
         }
+        public Pessoa(string nome)
+        {
+            Console.WriteLine(nome);
+        }
     }
 }
